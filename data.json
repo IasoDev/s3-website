@@ -1,6 +1,4 @@
 [
-	{"name": "Clinton", "votes": 48},
-	{"name": "Trump", "votes": 37},
-	{"name": "Stein", "votes": 2},
-	{"name": "Johnson", "votes": 6}
+	{"prioritaet": "2", "anfrageinhalt": "Toilettengang", "raumnummer": "101", "name": "Sonja Goerlich", "zeitpunkt": "10.30"},
+	{"prioritaet": "1", "anfrageinhalt": "Notfall", "raumnummer": "100", "name": "Peter Meier", "zeitpunkt": "10.40"},
 ]
