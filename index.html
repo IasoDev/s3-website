@@ -1,117 +1,67 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body style="text-align:center">
-	<h1>VOTE!</h1>
-	<form action="https://kfb9dlbm36.execute-api.us-west-2.amazonaws.com/prod/vote" method="post" onsubmit="hideForm()">
-		<div class="center">
-			<div>
-			<input type="radio" name="vote" value="none" checked id="radio1"><label for="radio1">No Vote</label>
-			</div><div>
-			<input type="radio" name="vote" value="Clinton" id="radio2"><label for="radio2">Hillary Clinton</label>
-			</div><div>
-			<input type="radio" name="vote" value="Trump" id="radio3"><label for="radio3">Donald Trump</label>
-			</div><div>
-			<input type="radio" name="vote" value="Johnson" id="radio4"><label for="radio4">Gary Johnson</label>
-			</div><div>
-  		  	<input type="radio" name="vote" value="Stein" id="radio5"><label for="radio5">Jill Stein</label>
-			</div>
-		</div>
-		<div style="padding-top: 20px;"><input type="submit" value="Submit" /></div>
-	</form>
-	<div class="thanks" style="display:none">Thanks for voting!</div>
-	
-	<h1>RESULTS</h1>
-	<svg class="chart"></svg>
-	
-<script src="https://d3js.org/d3.v4.min.js"></script>
-<script>
+  <head>
+    <meta charset="utf-8">
 
-var createCORSRequest = function(method, url) {
-	var xhr = new XMLHttpRequest();
-	if ("withCredentials" in xhr) {
-		// Most browsers.
-		xhr.open(method, url, true);
-	} else if (typeof XDomainRequest != "undefined") {
-		// IE8 & IE9
-		xhr = new XDomainRequest();
-		xhr.open(method, url);
-	} else {
-		// CORS not supported.
-		xhr = null;
-	}
-	return xhr;
-};
+    <title>Hilferufknopf</title>
 
-var loadXMLDoc = function(autoRefresh){
-	var width = 600,
-    	barHeight = 50,
-		padding = 60;
-	
-	var url = 'data.json';
-	var method = 'GET';
-	var xhr = createCORSRequest(method, url);
+    <link href="https://fonts.googleapis.com/css?family=Faster+One" rel="stylesheet"> 
+    <link rel="stylesheet" href="style.css">
+    
+  </head>
 
-	xhr.onload = function(req) {	  
-		  var data = JSON.parse(this.responseText).Items;
-		  
-		  data = data.sort((a,b) => b.tally - a.tally);
-		  
-		  var x = d3.scaleLinear()
-		      .domain([0, d3.max(data, function(d) { return d.tally + padding; })])
-		      .range([0, width]);
-		  
-		  var chart = d3.select(".chart")
-		      .attr("width", width)
-		      .attr("height", barHeight * data.length);
-			  
-		  chart.selectAll("*").remove()
+  <body style="text-align:center">
+    <h1>Request Information</h1>
+    <header>
 
-		  var bar = chart.selectAll("g")
-		      .data(data)
-		    .enter().append("g")
-		      .attr("transform", function(d, i) { return "translate(0," + i * barHeight + ")"; });
-		  
-		  bar.append("rect")
-		      .attr("width",  function(d) { return x(d.tally) + padding; })
-		      .attr("height", barHeight - 1);
+    </header>
 
-		  bar.append("text")
-		      .attr("x", function(d) { return x(d.tally) + padding - 3; })
-		      .attr("y", barHeight / 2)
-		      .attr("dy", ".35em")
-		      .text(function(d) { return d.candidate + ': ' + d.tally; });
-		  
-	};
+    <section>
 
-	xhr.onerror = function() {
-	  // Error code goes here.
-	};
-
-  	xhr.send();
-	
-	//AutoRefresh
-	if(autoRefresh){
-		window.setTimeout(loadXMLDoc, 3000, true);
-	}
-}
-
-function type(d) {
-  d.votes = +d.votes; // coerce to number
-  return d;
-}
-
-function hideForm(){
-	d3.select("form")
-		.style("display", "none");
-	d3.select(".thanks")
-		.style("display", "block");
-	window.setTimeout(loadXMLDoc, 1200, false);
-}
-
-loadXMLDoc(true);
-</script>
-</body>
+    </section>
+    
+    <div id="example-table"></div>
+      
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="jquery-ui.min.js"></script>
+    <link href="dist/css/tabulator.min.css" rel="stylesheet">
+    <script type="text/javascript" src="dist/js/tabulator.min.js"></script>
+    
+    <script>
+    var requestURL = 'https://s3-eu-west-1.amazonaws.com/notification-panel/data.json';
+    var request = new XMLHttpRequest();    
+    request.open('GET', requestURL); 
+    request.responseType = 'json';
+    request.send();     
+        
+    var header = document.querySelector('header');
+    var section = document.querySelector('section');
+    var requestURL = 'https://s3-eu-west-1.amazonaws.com/notification-panel/data.json';
+    var request = new XMLHttpRequest();
+    request.open('GET', requestURL);
+    request.responseType = 'json';
+    request.send(); 
+    request.onload = function() {
+        var data_json = request.response;
+        createTabel(data_json);
+    }
+    function createTable(jsonObj) {
+    $("#example-table").tabulator({
+        height:205, // set height of table, this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
+        layout:"fitColumns", //fit columns to width of table (optional)
+        columns:[ //Define Table Columns
+        {title:"Prioritaet", field:"prioritaet", width:150},
+        {title:"Anfrageinhalt", field:"anfrageinhalt", align:"left", formatter:"progress"},
+        {title:"Raumnummer", field:"raumnummer"},
+        {title:"Zeitpunkt", field:"zeitpunkt", sorter:"date", align:"center"},
+        ],
+        rowClick:function(e, row){ //trigger an alert message when the row is clicked
+        alert("Row " + row.getData().id + " Clicked!!!!");
+        },
+    });
+    console.log("Wurde erfolgreich geladen");    
+    $("#example-table").tabulator("setData", jsonObj);    
+    }
+    </script>
+  </body>
 </html>
