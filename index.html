@@ -11,7 +11,7 @@
   </head>
 
   <body style="text-align:center">
-    <h1>Request Information</h1>
+    <h1>Anfragen</h1>
     <header>
 
     </header>
@@ -41,24 +41,26 @@
     request.onload = function() {
         var data_json = request.response;
         console.log("Request wurde gespeichert");
-        createTabel(data_json.Anfrageliste);
+        createTabel(data_json);
         console.log("Tabelle wurde erstellt");
     }
     function createTabel(jsonObj) {
+    jsonObj_Liste=jsonObj.Anfragelist;
     $("#example-table").tabulator({
         height:205, // set height of table, this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
         layout:"fitColumns", //fit columns to width of table (optional)
         columns:[ //Define Table Columns
-        {title:"Prioritaet", field:"prioritaet", width:150},
-        {title:"Anfrageinhalt", field:"anfrageinhalt", align:"left", formatter:"progress"},
-        {title:"Raumnummer", field:"raumnummer"},
-        {title:"Zeitpunkt", field:"zeitpunkt", sorter:"date", align:"center"},
+        {title:"Prioritaet", field:"prioritaet"},
+        {title:"Anfrageinhalt", field:"anfrageinhalt", headerSort:false},
+        {title:"Name", field:"name", headerSort:false},    
+        {title:"Raumnummer", field:"raumnummer", headerSort:false},
+        {title:"Zeitpunkt", field:"zeitpunkt", sorter:"date", align:"center", headerSort:false},
         ],
         rowClick:function(e, row){ //trigger an alert message when the row is clicked
         alert("Row " + row.getData().id + " Clicked!!!!");
         },
     });   
-    $("#example-table").tabulator("setData", jsonObj);    
+    $("#example-table").tabulator("setData", jsonObj_Liste);    
     }
     </script>
   </body>
