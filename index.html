@@ -41,7 +41,7 @@
     request.onload = function() {
         var data_json = request.response;
         console.log("Request wurde gespeichert");
-        createTabel(data_json);
+        createTabel(data_json.Anfrageliste);
         console.log("Tabelle wurde erstellt");
     }
     function createTabel(jsonObj) {

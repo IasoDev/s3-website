@@ -1,25 +1,24 @@
-[
-  { "id"=1; 
+{"Anfragelist":[{
+	"id":1,
     "prioritaet": "Clark",
     "anfrageinhalt": "Toilette",
     "raumnummer": "101",
-    "zeitpunkt":"10:10",
+    "zeitpunkt":"10:10"
   },
   {
-    "id"=2;  
+    "id":2, 
     "prioritaet": "Clark",
     "anfrageinhalt": "Toilette",
     "raumnummer": "101",
-    "zeitpunkt":"10:10",
+    "zeitpunkt":"10:10"
   },
     {
-    "id"=3;
+	"id":3,
     "prioritaet": "Clark",
     "anfrageinhalt": "Toilette",
     "raumnummer": "101",
-    "zeitpunkt":"10:10",
-  }
-]
+    "zeitpunkt":"10:10"
+  }]}
 
 
 
