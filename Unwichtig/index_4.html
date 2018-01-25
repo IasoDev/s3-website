@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">    
+</head>
+<body style="text-align:center">
+	<h1>Request Information</h1>
+<header>
+
+</header>
+
+<section>
+
+</section>    
+    
+<div id="example-table"></div>
+
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="jquery-ui.min.js"></script> 
+<link href="dist/css/tabulator.min.css" rel="stylesheet">
+<script type="text/javascript" src="dist/js/tabulator.min.js"></script> 
+<script type="text/javascript" src="jquery.miranda.min.js"></script> 
+
+<script> 
+    var header = document.querySelector('header');
+    var section = document.querySelector('section');
+    var requestURL="data.json";
+    var request = new XMLHttpRequest();
+    request.open('GET', requestURL);
+    request.responseType = 'json';
+    request.send();
+    request.onload = function() {
+    var superHeroes = request.response;
+    populateHeader(superHeroes);
+    showHeroes(superHeroes);
+}
+</script>    
+
+    
+
+</body>
+</html>
