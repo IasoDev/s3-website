@@ -12,13 +12,7 @@
 
   <body style="text-align:center">
     <h1>Anfragen</h1>
-    <header>
-
-    </header>
-
-    <section>
-
-    </section>
+  
     
     <div id="example-table"></div>
       
@@ -27,23 +21,40 @@
     <link href="dist/css/tabulator.min.css" rel="stylesheet">
     <script type="text/javascript" src="dist/js/tabulator.min.js"></script>
     
-    <script>    
+    <script> 
         
-    var header = document.querySelector('header');
-    var section = document.querySelector('section');
-    var requestURL = 'https://s3-eu-west-1.amazonaws.com/notification-panel/data.json';
-    var request = new XMLHttpRequest();
-    request.open('GET', requestURL);
-    console.log("Request ist offen");
-    request.responseType = 'json';
-    request.send();
-    console.log("Request wurde gesendet");
-    request.onload = function() {
-        var data_json = request.response;
-        console.log("Request wurde gespeichert");
-        createTabel(data_json);
-        console.log("Tabelle wurde erstellt");
+    function initialisierung(){
+        var requestURL = 'https://s3-eu-west-1.amazonaws.com/notification-panel/data.json';
+        var request = new XMLHttpRequest();
+        request.open('GET', requestURL);
+        console.log("Request ist offen");
+        request.responseType = 'json';
+        request.send();
+        console.log("Request wurde gesendet");
+        request.onload = function() {
+            var data_json = request.response;
+            console.log("Request wurde gespeichert");
+            createTabel(data_json);
+            console.log("Tabelle wurde erstellt");
+        }  
     }
+    
+    function autoload(){
+        var requestURL = 'https://s3-eu-west-1.amazonaws.com/notification-panel/data.json';
+        var request = new XMLHttpRequest();
+        request.open('GET', requestURL);
+        console.log("Request ist offen");
+        request.responseType = 'json';
+        request.send();
+        console.log("Request wurde gesendet");
+        request.onload = function() {
+            var data_json = request.response;
+            console.log("Request wurde gespeichert");
+            $("#example-table").tabulator("setData", jsonObj_Liste);
+            console.log("Tabelle wurde geupdated");
+        }
+    }    
+    
     function createTabel(jsonObj) {
     jsonObj_Liste=jsonObj.Anfragelist;
     $("#example-table").tabulator({
@@ -62,6 +73,9 @@
     });   
     $("#example-table").tabulator("setData", jsonObj_Liste);    
     }
+    initialisierung();       
+    setInterval(autoload, 1000);
+  
     </script>
   </body>
 </html>
