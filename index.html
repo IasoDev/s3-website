@@ -21,27 +21,37 @@
     <link href="dist/css/tabulator.min.css" rel="stylesheet">
     <script type="text/javascript" src="dist/js/tabulator.min.js"></script>
     
-    <script> 
-        
+    <script>    
     function initialisierung(){
         var requestURL = 'https://s3-eu-west-1.amazonaws.com/notification-panel/data.json';
-        var request = new XMLHttpRequest();
-        request.open('GET', requestURL);
+        var request_ini = new XMLHttpRequest();
+        request_ini.open('GET', requestURL);
         console.log("Request ist offen");
-        request.responseType = 'json';
-        request.send();
+        request_ini.responseType = 'json';
+        request_ini.send();
         console.log("Request wurde gesendet");
-        request.onload = function() {
-            var data_json = request.response;
+        request_ini.onload = function() {
+            var data_json = request_ini.response;
             console.log("Request wurde gespeichert");
             createTabel(data_json);
             console.log("Tabelle wurde erstellt");
+			window.oldLastMod = request_ini.getResponseHeader("Last-Modified");
         }  
     }
     
     function autoload(){
-        var requestURL = 'https://s3-eu-west-1.amazonaws.com/notification-panel/data.json';
-        var request = new XMLHttpRequest();
+		date = new Date();
+        var requestURL = 'https://s3-eu-west-1.amazonaws.com/notification-panel/data.json?' + date.getTime();
+        var request1 = new XMLHttpRequest();
+        request1.open("HEAD", requestURL, false);
+        request1.send();
+        var lastMod = request1.getResponseHeader("Last-Modified");
+		console.log("LastModified:" + lastMod);
+		if (lastMod == window.oldLastMod) {
+			return;
+		}
+		window.oldLastMod = lastMod;
+		request = new XMLHttpRequest();
         request.open('GET', requestURL);
         console.log("Request ist offen");
         request.responseType = 'json';
@@ -51,6 +61,7 @@
             var data_json = request.response;
             console.log("Request wurde gespeichert");
             $("#example-table").tabulator("setData", jsonObj_Liste);
+			location.reload();
             console.log("Tabelle wurde geupdated");
         }
     }    
