@@ -27,25 +27,24 @@
     <link href="dist/css/tabulator.min.css" rel="stylesheet">
     <script type="text/javascript" src="dist/js/tabulator.min.js"></script>
     
-    <script>
-    var requestURL = 'https://s3-eu-west-1.amazonaws.com/notification-panel/data.json';
-    var request = new XMLHttpRequest();    
-    request.open('GET', requestURL); 
-    request.responseType = 'json';
-    request.send();     
+    <script>    
         
     var header = document.querySelector('header');
     var section = document.querySelector('section');
     var requestURL = 'https://s3-eu-west-1.amazonaws.com/notification-panel/data.json';
     var request = new XMLHttpRequest();
     request.open('GET', requestURL);
+    console.log("Request ist offen");
     request.responseType = 'json';
-    request.send(); 
+    request.send();
+    console.log("Request wurde gesendet");
     request.onload = function() {
         var data_json = request.response;
+        console.log("Request wurde gespeichert");
         createTabel(data_json);
+        console.log("Tabelle wurde erstellt");
     }
-    function createTable(jsonObj) {
+    function createTabel(jsonObj) {
     $("#example-table").tabulator({
         height:205, // set height of table, this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
         layout:"fitColumns", //fit columns to width of table (optional)
@@ -58,8 +57,7 @@
         rowClick:function(e, row){ //trigger an alert message when the row is clicked
         alert("Row " + row.getData().id + " Clicked!!!!");
         },
-    });
-    console.log("Wurde erfolgreich geladen");    
+    });   
     $("#example-table").tabulator("setData", jsonObj);    
     }
     </script>
