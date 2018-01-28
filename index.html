@@ -67,16 +67,16 @@
     }    
     
     function createTabel(jsonObj) {
-    jsonObj_Liste=jsonObj.Anfragelist;
+    jsonObj_Liste=jsonObj.Requests;
     $("#example-table").tabulator({
         height:205, // set height of table, this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
         layout:"fitColumns", //fit columns to width of table (optional)
         columns:[ //Define Table Columns
-        {title:"Prioritaet", field:"prioritaet"},
-        {title:"Anfrageinhalt", field:"anfrageinhalt", headerSort:false},
-        {title:"Name", field:"name", headerSort:false},    
-        {title:"Raumnummer", field:"raumnummer", headerSort:false},
-        {title:"Zeitpunkt", field:"zeitpunkt", sorter:"date", align:"center", headerSort:false},
+        {title:"Prioritaet", field:"priority"},
+        {title:"Anfrageinhalt", field:"content", headerSort:false},
+        //{title:"Name", field:"name", headerSort:false},    
+        //{title:"Raumnummer", field:"raumnummer", headerSort:false},
+        {title:"Zeitpunkt", field:"timestamp", sorter:"date", align:"center", headerSort:false},
         ],
         rowClick:function(e, row){ //trigger an alert message when the row is clicked
         alert("Row " + row.getData().id + " Clicked!!!!");
