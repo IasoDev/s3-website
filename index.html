@@ -74,13 +74,13 @@
         columns:[ //Define Table Columns
         {title:"Prioritaet", field:"priority"},
         {title:"Anfrageinhalt", field:"content", headerSort:false},
-        //{title:"Name", field:"name", headerSort:false},    
-        //{title:"Raumnummer", field:"raumnummer", headerSort:false},
+        {title:"Name", field:"name", headerSort:false},    
+        {title:"Raumnummer", field:"room", headerSort:false},
         {title:"Zeitpunkt", field:"timestamp", sorter:"date", align:"center", headerSort:false},
         ],
-        rowClick:function(e, row){ //trigger an alert message when the row is clicked
+        /*rowClick:function(e, row){ //trigger an alert message when the row is clicked
         alert("Row " + row.getData().id + " Clicked!!!!");
-        },
+        }*/
     });   
     $("#example-table").tabulator("setData", jsonObj_Liste);    
     }
