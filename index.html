@@ -23,7 +23,8 @@
     <link href="dist/css/tabulator.min.css" rel="stylesheet">
     <script type="text/javascript" src="dist/js/tabulator.min.js"></script>
     
-    <script>    
+    <script>  
+    //Is called, when the table is diplayed for the first time    
     function initialisierung(){
         var requestURL = 'https://s3-eu-west-1.amazonaws.com/notification-panel/data.json';
         var request_ini = new XMLHttpRequest();
@@ -40,7 +41,7 @@
 			window.oldLastMod = request_ini.getResponseHeader("Last-Modified");
         }  
     }
-    
+    // Updates the website with new data
     function autoload(){
 		date = new Date();
         var requestURL = 'https://s3-eu-west-1.amazonaws.com/notification-panel/data.json?' + date.getTime();
@@ -67,7 +68,7 @@
             console.log("Tabelle wurde geupdated");
         }
     }    
-    
+    // Function, which creates the tabel
     function createTabel(jsonObj) {
     jsonObj_Liste=jsonObj.Requests;
     $("#example-table").tabulator({
